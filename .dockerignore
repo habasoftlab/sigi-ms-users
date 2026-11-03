@@ -1,8 +1,10 @@
 target/
+!target/*.jar
 .mvn/
 mvnw
 mvnw.cmd
 .git/
 .github/
 Dockerfile
-docker-compose*.yaml
+docker-compose*.yaml 
+

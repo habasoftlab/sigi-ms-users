@@ -2,16 +2,15 @@ package com.imprenta.personas.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer; // <-- IMPORTANTE AÑADIR
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.cors.CorsConfiguration; // <-- IMPORTANTE AÑADIR
-import org.springframework.web.cors.CorsConfigurationSource; // <-- IMPORTANTE AÑADIR
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource; // <-- IMPORTANTE AÑADIR
+// import org.springframework.web.cors.CorsConfiguration; 
+// import org.springframework.web.cors.CorsConfigurationSource; 
+// import org.springframework.web.cors.UrlBasedCorsConfigurationSource; 
+import org.springframework.security.web.SecurityFilterChain;
 
-import java.util.List; // <-- IMPORTANTE AÑADIR
+// import java.util.List; 
 
 @Configuration
 public class SecurityConfig {
@@ -25,25 +24,22 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .csrf(csrf -> csrf.disable())
-            .cors(Customizer.withDefaults()) // <-- 1. ACTIVAR CORS AQUÍ
+            .cors(cors -> cors.disable()) 
             .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
 
         return http.build();
     }
 
-    // <-- 2. AÑADIR ESTE BEAN PARA CONFIGURAR LOS ORÍGENES PERMITIDOS
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        // Permite el origen del frontend local de tu compañero
-        configuration.setAllowedOrigins(List.of("http://localhost:3000"));
-        // Permite los métodos necesarios para la API
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        // Permite cualquier cabecera
-        configuration.setAllowedHeaders(List.of("*"));
+    //  cors
+    // @Bean
+    // public CorsConfigurationSource corsConfigurationSource() {
+    //     CorsConfiguration configuration = new CorsConfiguration();
+    //     configuration.setAllowedOrigins(List.of("http://localhost:3000"));
+    //     configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+    //     configuration.setAllowedHeaders(List.of("*"));
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
+    //     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    //     source.registerCorsConfiguration("/**", configuration);
+    //     return source;
+    // }
 }
